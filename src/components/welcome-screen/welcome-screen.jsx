@@ -1,7 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export const WelcomeScreen = (props) => {
-  // eslint-disable-next-line react/prop-types
   const {time, errorCount} = props;
 
   return <section className="welcome">
@@ -19,3 +19,7 @@ export const WelcomeScreen = (props) => {
   </section>;
 };
 
+WelcomeScreen.propTypes = {
+  time: PropTypes.number.isRequired,
+  errorCount: PropTypes.number.isRequired,
+};
