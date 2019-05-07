@@ -6,12 +6,18 @@ const init = () => {
   const settings = {
     gameTime: 10,
     errorCount: 5,
+    startGame: (e) => {
+      e.preventDefault();
+      // eslint-disable-next-line no-console
+      console.log(`CLICK on start`);
+    },
   };
 
   ReactDOM.render(
       <App
         errorCount={settings.errorCount}
         gameTime={settings.gameTime}
+        startGame={settings.startGame}
       />,
       document.querySelector(`.main`)
   );

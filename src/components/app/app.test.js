@@ -7,7 +7,7 @@ it(`App correctly renders`, () => {
     .create(<App
       errorCount={0}
       gameTime={0}
-      onClick={jest.fn()}
+      startGame={jest.fn()}
     />)
     .toJSON();
 

@@ -7,7 +7,7 @@ it(`WelcomeScreen correctly renders`, () => {
     .create(<WelcomeScreen
       errorCount={0}
       time={0}
-      onClick={jest.fn()}
+      startGame={jest.fn()}
     />)
     .toJSON();
 
