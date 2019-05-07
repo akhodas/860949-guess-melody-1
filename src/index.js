@@ -9,7 +9,7 @@ const init = () => {
     startGame: (e) => {
       e.preventDefault();
       // eslint-disable-next-line no-console
-      console.log(`CLICK on start`);
+      console.log(`CLICK on 'Start'`);
     },
   };
 
