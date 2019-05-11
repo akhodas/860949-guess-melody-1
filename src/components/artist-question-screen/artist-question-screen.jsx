@@ -47,7 +47,6 @@ const ArtistQuestionScreen = ({question, onAnswer}) => {
       </div>
 
       <form className="game__artist" onChange={(e) => {
-        e.preventDefault();
         onAnswer([e.target.value]);
       }}
       >

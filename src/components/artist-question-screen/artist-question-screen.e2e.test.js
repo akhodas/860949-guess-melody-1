@@ -31,7 +31,7 @@ const mock = {
 };
 
 describe(`ArtistQuestionScreen`, () => {
-  it(`When user answers artist question form is not sent`, () => {
+  it(`When a user answers a question, the function is called with the necessary arguments`, () => {
     const {question} = mock;
     const onAnswer = jest.fn();
     const artistQuestion = mount(<ArtistQuestionScreen
@@ -43,9 +43,10 @@ describe(`ArtistQuestionScreen`, () => {
     const formSendPrevention = jest.fn();
     form.simulate(`change`, {
       preventDefault: formSendPrevention,
+      target: {value: `artist-1`},
     });
 
     expect(onAnswer).toHaveBeenCalledTimes(1);
-    expect(formSendPrevention).toHaveBeenCalledTimes(1);
+    expect(onAnswer).toHaveBeenCalledWith([`artist-1`]);
   });
 });
