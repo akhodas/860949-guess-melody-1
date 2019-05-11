@@ -108,7 +108,6 @@ exports[`GenreQuestionScreen correctly rendered 1`] = `
             className="game__input visually-hidden"
             id="answer-0"
             name="answer"
-            onChange={[Function]}
             type="checkbox"
             value="answer-0"
           />
@@ -139,7 +138,6 @@ exports[`GenreQuestionScreen correctly rendered 1`] = `
             className="game__input visually-hidden"
             id="answer-1"
             name="answer"
-            onChange={[Function]}
             type="checkbox"
             value="answer-1"
           />
@@ -170,7 +168,6 @@ exports[`GenreQuestionScreen correctly rendered 1`] = `
             className="game__input visually-hidden"
             id="answer-2"
             name="answer"
-            onChange={[Function]}
             type="checkbox"
             value="answer-2"
           />
@@ -201,7 +198,6 @@ exports[`GenreQuestionScreen correctly rendered 1`] = `
             className="game__input visually-hidden"
             id="answer-3"
             name="answer"
-            onChange={[Function]}
             type="checkbox"
             value="answer-3"
           />

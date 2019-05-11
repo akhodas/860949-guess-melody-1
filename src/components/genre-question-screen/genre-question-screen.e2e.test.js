@@ -62,8 +62,16 @@ describe(`GenreQuestionScreen`, () => {
     const formSendPrevention = jest.fn();
     form.simulate(`submit`, {
       preventDefault: formSendPrevention,
+      target: {
+        elements: [
+          {tagName: `INPUT`, value: `answer-0`, checked: true},
+          {tagName: `BUTTON`, value: `answer-1`, checked: true},
+          {tagName: `INPUT`, value: `answer-1`, checked: false},
+          {tagName: `INPUT`, value: `answer-2`, checked: true},
+        ],
+      },
     });
 
-    expect(onAnswer).toHaveBeenCalledWith([`answer-1`]);
+    expect(onAnswer).toHaveBeenCalledWith([`answer-0`, `answer-2`]);
   });
 });
