@@ -40,9 +40,7 @@ describe(`ArtistQuestionScreen`, () => {
     />);
 
     const form = artistQuestion.find(`form`);
-    const formSendPrevention = jest.fn();
     form.simulate(`change`, {
-      preventDefault: formSendPrevention,
       target: {value: `artist-1`},
     });
 
