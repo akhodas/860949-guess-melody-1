@@ -1,14 +1,14 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {WelcomeScreen} from './welcome-screen.jsx';
+import WelcomeScreen from './welcome-screen.jsx';
 
 describe(`WelcomeScreen`, () => {
   it(`correctly rendered`, () => {
     const tree = renderer
       .create(<WelcomeScreen
         errorCount={0}
-        time={0}
-        startGame={jest.fn()}
+        gameTime={0}
+        onClick={jest.fn()}
       />)
       .toJSON();
 
