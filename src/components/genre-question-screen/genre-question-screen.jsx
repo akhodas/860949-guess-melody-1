@@ -10,7 +10,6 @@ const GenreQuestionScreen = (props) => {
   } = question;
 
   const checkedAnswers = (array) => {
-    // console.log(array);
     const result = [];
     for (let i = 0; i < array.length; i++) {
       if (array[i].tagName === `INPUT` && array[i].checked) {
@@ -55,7 +54,6 @@ const GenreQuestionScreen = (props) => {
       <h2 className="game__title">Выберите {genre} треки</h2>
       <form className="game__tracks" onSubmit={(e) => {
         e.preventDefault();
-        // console.log(e.target);
         onAnswer(checkedAnswers(e.target.elements));
       }}>
         {answers.map((it, i) => <div className="track" key={`answer-${i}`}>
