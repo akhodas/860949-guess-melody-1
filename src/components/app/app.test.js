@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {App} from './app.jsx';
+import App from './app.jsx';
 
 describe(`App`, () => {
   it(`correctly rendered`, () => {
@@ -8,7 +8,7 @@ describe(`App`, () => {
       .create(<App
         errorCount={0}
         gameTime={0}
-        startGame={jest.fn()}
+        questions={[]}
       />)
       .toJSON();
 

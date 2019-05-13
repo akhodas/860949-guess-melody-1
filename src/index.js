@@ -1,26 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import {App} from "./components/app/app.jsx";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/app/app.jsx';
+import settings from './mocks/setting';
+import questions from './mocks/questions';
 
-const init = () => {
-  const settings = {
-    gameTime: 10,
-    errorCount: 5,
-    startGame: (e) => {
-      e.preventDefault();
-      // eslint-disable-next-line no-console
-      console.log(`CLICK on 'Start'`);
-    },
-  };
+const init = (gameSettings, gameQuestions) => {
 
   ReactDOM.render(
       <App
-        errorCount={settings.errorCount}
-        gameTime={settings.gameTime}
-        startGame={settings.startGame}
+        {...gameSettings}
+        questions={gameQuestions}
       />,
       document.querySelector(`.main`)
   );
 };
 
-init();
+init(settings, questions);
