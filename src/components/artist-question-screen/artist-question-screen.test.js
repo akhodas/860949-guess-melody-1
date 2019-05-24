@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import ArtistQuestionScreen from './artist-question-screen.jsx';
 
 describe(`ArtistQuestionScreen`, () => {
@@ -28,7 +29,11 @@ describe(`ArtistQuestionScreen`, () => {
           ],
         }}
         onAnswer={jest.fn()}
-      />)
+      />, {
+        createNodeMock: () => {
+          return {};
+        }
+      })
       .toJSON();
 
     expect(tree).toMatchSnapshot();

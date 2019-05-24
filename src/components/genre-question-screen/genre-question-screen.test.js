@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import GenreQuestionScreen from './genre-question-screen.jsx';
 
 describe(`GenreQuestionScreen`, () => {
@@ -29,7 +30,11 @@ describe(`GenreQuestionScreen`, () => {
           ],
         }}
         onAnswer={jest.fn()}
-      />)
+      />, {
+        createNodeMock: () => {
+          return {};
+        }
+      })
       .toJSON();
 
     expect(tree).toMatchSnapshot();
