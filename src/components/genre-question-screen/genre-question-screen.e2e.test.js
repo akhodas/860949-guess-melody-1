@@ -1,8 +1,8 @@
-import React from "react";
-import {configure, mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import React from 'react';
+import {configure, mount} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
-import GenreQuestionScreen from "./genre-question-screen.jsx";
+import GenreQuestionScreen from './genre-question-screen.jsx';
 
 configure({adapter: new Adapter()});
 
