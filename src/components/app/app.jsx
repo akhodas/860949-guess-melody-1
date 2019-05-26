@@ -18,29 +18,43 @@ class App extends Component {
   _getScreen(question) {
     if (!question) {
       const {
-        errorCount,
+        maxMistakes,
         gameTime,
         onWelcomeScreenClick,
       } = this.props;
 
       return <WelcomeScreen
-        errorCount={errorCount}
+        errorCount={maxMistakes}
         gameTime={gameTime}
         onClick={onWelcomeScreenClick}
       />;
     }
 
-    const {onUserAnswer} = this.props;
+    const {
+      onUserAnswer,
+      mistakes,
+      maxMistakes,
+    } = this.props;
 
     switch (question.type) {
       case `genre`: return <GenreQuestionScreen
         question={question}
-        onAnswer={(userAnswer) => onUserAnswer(userAnswer, question)}
+        onAnswer={(userAnswer) => onUserAnswer(
+            userAnswer,
+            question,
+            mistakes,
+            maxMistakes
+        )}
       />;
 
       case `artist`: return <ArtistQuestionScreen
         question={question}
-        onAnswer={(userAnswer) => onUserAnswer(userAnswer, question)}
+        onAnswer={(userAnswer) => onUserAnswer(
+            userAnswer,
+            question,
+            mistakes,
+            maxMistakes
+        )}
       />;
     }
 
@@ -59,6 +73,7 @@ class App extends Component {
           <span className="visually-hidden">Сыграть ещё раз</span>
           <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию" />
         </a>
+
         <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
           <circle className="timer__line" cx="390" cy="390" r="370"
             style={{
@@ -68,11 +83,13 @@ class App extends Component {
             }}
           />
         </svg>
+
         <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
           <span className="timer__mins">05</span>
           <span className="timer__dots">:</span>
           <span className="timer__secs">00</span>
         </div>
+
         <div className="game__mistakes">
           <div className="wrong"/>
           <div className="wrong"/>
@@ -87,7 +104,8 @@ class App extends Component {
 
 App.propTypes = {
   gameTime: PropTypes.number.isRequired,
-  errorCount: PropTypes.number.isRequired,
+  mistakes: PropTypes.number.isRequired,
+  maxMistakes: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired,
   step: PropTypes.number.isRequired,
   onUserAnswer: PropTypes.func.isRequired,
@@ -103,9 +121,14 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 const mapDispatchToProps = (dispatch) => ({
   onWelcomeScreenClick: () => dispatch(ActionCreator.incrementStep()),
 
-  onUserAnswer: (userAnswer, question) => {
+  onUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
     dispatch(ActionCreator.incrementStep());
-    dispatch(ActionCreator.incrementMistake(userAnswer, question));
+    dispatch(ActionCreator.incrementMistake(
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes
+    ));
   }
 });
 
