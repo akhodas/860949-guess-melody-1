@@ -7,8 +7,12 @@ class GenreQuestionScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    const {question} = this.props;
+    const {answers} = question;
+
     this.state = {
       activePlayer: -1,
+      userAnswer: new Array(answers.length).fill(false),
     };
   }
 
@@ -55,7 +59,7 @@ class GenreQuestionScreen extends React.PureComponent {
           <h2 className="game__title">Выберите {genre} треки</h2>
           <form className="game__tracks" onSubmit={(e) => {
             e.preventDefault();
-            onAnswer(this._checkedAnswers(e.target.elements));
+            onAnswer(this.state.userAnswer);
           }}>
             {answers.map((it, i) => <div className="track" key={`answer-${i}`}>
               <AudioPlayer
@@ -66,11 +70,18 @@ class GenreQuestionScreen extends React.PureComponent {
                 })}
               />
               <div className="game__answer">
-                <input className="game__input visually-hidden"
+                <input
+                  checked={this.state.userAnswer[i]}
+                  className="game__input visually-hidden"
                   type="checkbox"
                   name="answer"
                   value={`answer-${i}`}
                   id={`answer-${i}`}
+                  onChange={() => {
+                    const userAnswer = [...this.state.userAnswer];
+                    userAnswer[i] = !userAnswer[i];
+                    this.setState({userAnswer});
+                  }}
                 />
                 <label className="game__check" htmlFor={`answer-${i}`}>
                     Отметить

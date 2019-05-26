@@ -62,16 +62,14 @@ class ArtistQuestionScreen extends React.PureComponent {
             />
           </div>
 
-          <form className="game__artist" onChange={(e) => {
-            onAnswer([e.target.value]);
-          }}
-          >
+          <form className="game__artist">
             {answers.map((it, i) => <div className="artist" key={i}>
               <input className="artist__input visually-hidden"
                 type="radio"
                 name="answer"
                 value={`artist-${i}`}
                 id={`artist-${i}`}
+                onClick={() => onAnswer(it)}
               />
               <label className="artist__name" htmlFor={`artist-${i}`}>
                 <img className="artist__picture" src={it.picture} alt={it.artist} />
