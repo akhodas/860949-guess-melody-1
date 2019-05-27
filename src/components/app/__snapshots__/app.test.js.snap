@@ -370,7 +370,7 @@ exports[`App correctly renders genre question screen 1`] = `
           className="artist__input visually-hidden"
           id="artist-0"
           name="answer"
-          onClick={[Function]}
+          onChange={[Function]}
           type="radio"
           value="artist-0"
         />
@@ -393,7 +393,7 @@ exports[`App correctly renders genre question screen 1`] = `
           className="artist__input visually-hidden"
           id="artist-1"
           name="answer"
-          onClick={[Function]}
+          onChange={[Function]}
           type="radio"
           value="artist-1"
         />
@@ -416,7 +416,7 @@ exports[`App correctly renders genre question screen 1`] = `
           className="artist__input visually-hidden"
           id="artist-2"
           name="answer"
-          onClick={[Function]}
+          onChange={[Function]}
           type="radio"
           value="artist-2"
         />
