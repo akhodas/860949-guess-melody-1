@@ -38,7 +38,7 @@ class ArtistQuestionScreen extends React.PureComponent {
               name="answer"
               value={`artist-${i}`}
               id={`artist-${i}`}
-              onClick={() => onAnswer(it)}
+              onChange={() => onAnswer(it)}
             />
             <label className="artist__name" htmlFor={`artist-${i}`}>
               <img className="artist__picture" src={it.picture} alt={it.artist} />
