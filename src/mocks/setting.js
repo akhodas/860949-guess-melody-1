@@ -1,4 +1,4 @@
 export default {
-  gameTime: 10,
-  errorCount: 5,
+  gameTime: 5,
+  errorCount: 3,
 };
