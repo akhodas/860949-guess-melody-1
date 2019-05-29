@@ -29,8 +29,10 @@ describe(`GenreQuestionScreen`, () => {
             },
           ],
         }}
+        userAnswer={[false, false, false, false]}
         activePlayer={-1}
         onAnswer={jest.fn()}
+        onChange={jest.fn()}
         onPlayButtonClick={jest.fn()}
       />, {
         createNodeMock: () => {

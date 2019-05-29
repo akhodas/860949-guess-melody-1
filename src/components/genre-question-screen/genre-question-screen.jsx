@@ -4,19 +4,16 @@ import PropTypes from 'prop-types';
 import AudioPlayer from '../audio-player/audio-player.jsx';
 
 class GenreQuestionScreen extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    const {question} = this.props;
-    const {answers} = question;
-
-    this.state = {
-      userAnswer: new Array(answers.length).fill(false),
-    };
-  }
-
   render() {
-    const {activePlayer, question, onAnswer, onPlayButtonClick} = this.props;
+    const {
+      activePlayer,
+      question,
+      onAnswer,
+      onChange,
+      onPlayButtonClick,
+      userAnswer,
+    } = this.props;
+
     const {
       answers,
       genre,
@@ -27,7 +24,7 @@ class GenreQuestionScreen extends React.PureComponent {
         <h2 className="game__title">Выберите {genre} треки</h2>
         <form className="game__tracks" onSubmit={(e) => {
           e.preventDefault();
-          onAnswer(this.state.userAnswer);
+          onAnswer();
         }}>
           {answers.map((it, i) => <div className="track" key={`answer-${i}`}>
             <AudioPlayer
@@ -37,17 +34,13 @@ class GenreQuestionScreen extends React.PureComponent {
             />
             <div className="game__answer">
               <input
-                checked={this.state.userAnswer[i]}
+                checked={userAnswer[i]}
                 className="game__input visually-hidden"
                 type="checkbox"
                 name="answer"
                 value={`answer-${i}`}
                 id={`answer-${i}`}
-                onChange={() => {
-                  const userAnswer = [...this.state.userAnswer];
-                  userAnswer[i] = !userAnswer[i];
-                  this.setState({userAnswer});
-                }}
+                onChange={() => onChange(i)}
               />
               <label className="game__check" htmlFor={`answer-${i}`}>
                     Отметить
@@ -59,21 +52,12 @@ class GenreQuestionScreen extends React.PureComponent {
       </section>
     );
   }
-
-  _checkedAnswers(array) {
-    const result = [];
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].tagName === `INPUT` && array[i].checked) {
-        result.push(array[i].value);
-      }
-    }
-    return result;
-  }
 }
 
 GenreQuestionScreen.propTypes = {
   activePlayer: PropTypes.number.isRequired,
   onAnswer: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   question: PropTypes.shape({
     answers: PropTypes.arrayOf(PropTypes.shape({
@@ -83,6 +67,7 @@ GenreQuestionScreen.propTypes = {
     genre: PropTypes.oneOf([`rock`, `jazz`, `blues`]).isRequired,
     type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
   }).isRequired,
+  userAnswer: PropTypes.arrayOf(PropTypes.bool).isRequired,
 };
 
 export default GenreQuestionScreen;
