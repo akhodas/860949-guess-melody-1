@@ -11,13 +11,12 @@ class GenreQuestionScreen extends React.PureComponent {
     const {answers} = question;
 
     this.state = {
-      activePlayer: -1,
       userAnswer: new Array(answers.length).fill(false),
     };
   }
 
   render() {
-    const {question, onAnswer} = this.props;
+    const {activePlayer, question, onAnswer, onPlayButtonClick} = this.props;
     const {
       answers,
       genre,
@@ -33,10 +32,8 @@ class GenreQuestionScreen extends React.PureComponent {
           {answers.map((it, i) => <div className="track" key={`answer-${i}`}>
             <AudioPlayer
               src={it.src}
-              isPlaying={i === this.state.activePlayer}
-              onPlayButtonClick={() => this.setState({
-                activePlayer: this.state.activePlayer === i ? -1 : i
-              })}
+              isPlaying={i === activePlayer}
+              onPlayButtonClick={() => onPlayButtonClick(i)}
             />
             <div className="game__answer">
               <input
@@ -75,7 +72,9 @@ class GenreQuestionScreen extends React.PureComponent {
 }
 
 GenreQuestionScreen.propTypes = {
+  activePlayer: PropTypes.number.isRequired,
   onAnswer: PropTypes.func.isRequired,
+  onPlayButtonClick: PropTypes.func.isRequired,
   question: PropTypes.shape({
     answers: PropTypes.arrayOf(PropTypes.shape({
       src: PropTypes.string.isRequired,
