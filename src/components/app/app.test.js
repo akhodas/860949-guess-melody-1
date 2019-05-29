@@ -64,6 +64,7 @@ describe(`App`, () => {
       onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
       resetGame={jest.fn()}
+      renderScreen={jest.fn()}
     />).toJSON();
 
     expect(tree).toMatchSnapshot();
@@ -80,6 +81,7 @@ describe(`App`, () => {
       onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
       resetGame={jest.fn()}
+      renderScreen={jest.fn()}
     />, {
       createNodeMock: () => {
         return {};
@@ -100,6 +102,7 @@ describe(`App`, () => {
       onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
       resetGame={jest.fn()}
+      renderScreen={jest.fn()}
     />, {
       createNodeMock: () => {
         return {};
