@@ -7,13 +7,23 @@ import App from './components/app/app.jsx';
 import settings from './mocks/setting';
 import questions from './mocks/questions';
 import {reducer} from './reducer';
+import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
+
+
+const AppWrapped = withScreenSwitch(App);
 
 const init = (gameSettings, gameQuestions) => {
-  const store = createStore(reducer);
+
+  /* eslint-disable no-underscore-dangle */
+  const store = createStore(
+      reducer,
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
+  /* eslint-enable */
 
   ReactDOM.render(
       <Provider store={store}>
-        <App
+        <AppWrapped
           maxMistakes={gameSettings.errorCount}
           gameTime={gameSettings.gameTime}
           questions={gameQuestions}

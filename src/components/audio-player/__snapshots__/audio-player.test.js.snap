@@ -5,7 +5,7 @@ Array [
   <button
     className="track__button track__button--play"
     disabled={true}
-    onClick={[Function]}
+    onClick={[MockFunction]}
     type="button"
   />,
   <div

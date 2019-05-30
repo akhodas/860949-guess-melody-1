@@ -63,6 +63,8 @@ describe(`App`, () => {
       step={-1}
       onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
+      resetGame={jest.fn()}
+      renderScreen={jest.fn()}
     />).toJSON();
 
     expect(tree).toMatchSnapshot();
@@ -78,6 +80,8 @@ describe(`App`, () => {
       step={1}
       onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
+      resetGame={jest.fn()}
+      renderScreen={jest.fn()}
     />, {
       createNodeMock: () => {
         return {};
@@ -94,9 +98,11 @@ describe(`App`, () => {
       maxMistakes={Infinity}
       gameTime={100}
       questions={questions}
-      step={2}
+      step={1}
       onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
+      resetGame={jest.fn()}
+      renderScreen={jest.fn()}
     />, {
       createNodeMock: () => {
         return {};

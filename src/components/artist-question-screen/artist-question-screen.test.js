@@ -29,6 +29,7 @@ describe(`ArtistQuestionScreen`, () => {
           ],
         }}
         onAnswer={jest.fn()}
+        renderPlayer={jest.fn()}
       />, {
         createNodeMock: () => {
           return {};
