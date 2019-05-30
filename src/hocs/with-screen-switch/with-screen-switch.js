@@ -43,10 +43,18 @@ const withScreenSwitch = (Component) => {
     }
 
     _getScreen(question) {
+      const {
+        onUserAnswer,
+        mistakes,
+        maxMistakes,
+        resetGame,
+      } = this.props;
+
       if (!question) {
         const {step, questions} = this.props;
         if (step > questions.length - 1) {
-          return <WinScreen/>;
+          return <WinScreen
+            onRelaunchButtonClick={resetGame}/>;
         } else {
           const {
             maxMistakes,
@@ -61,13 +69,6 @@ const withScreenSwitch = (Component) => {
           />;
         }
       }
-
-      const {
-        onUserAnswer,
-        mistakes,
-        maxMistakes,
-        resetGame,
-      } = this.props;
 
       if (mistakes >= maxMistakes) {
         return <GameOverScreen
