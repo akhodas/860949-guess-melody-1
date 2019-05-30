@@ -24,8 +24,8 @@ const withUserAnswer = (Component) => {
     }
 
     _onChange(i) {
-      const userAnswers = this.state.userAnswers.slice(0);
-      userAnswers[i] = !userAnswers[i];
+      const userAnswers = this.state.userAnswers.map(
+          (answer, index) => index === i ? !answer : answer);
       this.setState({userAnswers});
     }
 
