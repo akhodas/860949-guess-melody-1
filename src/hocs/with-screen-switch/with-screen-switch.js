@@ -14,6 +14,11 @@ import withTransformProps from "../../hocs/with-transform-props/with-transform-p
 import withUserAnswer from "../../hocs/with-user-answer/with-user-answer";
 import {ActionCreator} from "../../reducer";
 
+const TypeQuestion = {
+  ARTIST: `artist`,
+  GENRE: `genre`,
+};
+
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
     renderAnswer: props.renderPlayer,
@@ -57,7 +62,6 @@ const withScreenSwitch = (Component) => {
             onRelaunchButtonClick={resetGame}/>;
         } else {
           const {
-            maxMistakes,
             gameTime,
             onWelcomeScreenClick,
           } = this.props;
@@ -77,7 +81,7 @@ const withScreenSwitch = (Component) => {
       }
 
       switch (question.type) {
-        case `genre`: return <QuestionGenreScreenWrapped
+        case TypeQuestion.GENRE: return <QuestionGenreScreenWrapped
           answers={question.answers}
           question={question}
           onAnswer={(userAnswer) => onUserAnswer(
@@ -86,7 +90,7 @@ const withScreenSwitch = (Component) => {
           )}
         />;
 
-        case `artist`: return <ArtistQuestionScreenWrapped
+        case TypeQuestion.ARTIST: return <ArtistQuestionScreenWrapped
           question={question}
           onAnswer={(userAnswer) => onUserAnswer(
               userAnswer,
