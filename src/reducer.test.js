@@ -239,6 +239,7 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(undefined, {})).toEqual({
       step: -1,
       mistakes: 0,
+      questions: [],
     });
   });
 
@@ -299,6 +300,7 @@ describe(`Reducer works correctly`, () => {
     })).toEqual({
       step: -1,
       mistakes: 0,
+      questions: [],
     });
   });
 });

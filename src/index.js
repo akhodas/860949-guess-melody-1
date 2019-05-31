@@ -5,14 +5,13 @@ import {Provider} from 'react-redux';
 
 import App from './components/app/app.jsx';
 import settings from './mocks/setting';
-import questions from './mocks/questions';
-import {reducer} from './reducer';
+import {reducer, ActionCreator} from './reducer';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
 
 
 const AppWrapped = withScreenSwitch(App);
 
-const init = (gameSettings, gameQuestions) => {
+const init = (gameSettings) => {
 
   /* eslint-disable no-underscore-dangle */
   const store = createStore(
@@ -21,16 +20,17 @@ const init = (gameSettings, gameQuestions) => {
   );
   /* eslint-enable */
 
+  store.dispatch(ActionCreator.loadQuestions());
+
   ReactDOM.render(
       <Provider store={store}>
         <AppWrapped
           maxMistakes={gameSettings.errorCount}
           gameTime={gameSettings.gameTime}
-          questions={gameQuestions}
         />
       </Provider>,
       document.querySelector(`.main`)
   );
 };
 
-init(settings, questions);
+init(settings);

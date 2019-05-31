@@ -123,8 +123,9 @@ const withScreenSwitch = (Component) => {
 export {withScreenSwitch};
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  step: state.step,
   mistakes: state.mistakes,
+  questions: state.questions,
+  step: state.step,
 });
 
 const mapDispatchToProps = (dispatch) => ({
