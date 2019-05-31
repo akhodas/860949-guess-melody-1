@@ -8,7 +8,8 @@ import thunk from "redux-thunk";
 import App from './components/app/app.jsx';
 import {createAPI} from './api';
 import settings from './mocks/setting';
-import {reducer, Operation} from './reducer';
+import reducer from './reducer/index';
+import {Operation} from './reducer/data/data';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
 
 

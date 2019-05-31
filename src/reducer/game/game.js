@@ -1,14 +1,12 @@
 const initialState = {
   step: -1,
   mistakes: 0,
-  questions: [],
 };
 
 
 const ActionType = {
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
   INCREMENT_STEP: `INCREMENT_STEP`,
-  LOAD_QUESTIONS: `LOAD_QUESTIONS`,
   RESET: `RESET`,
 };
 
@@ -45,28 +43,11 @@ const ActionCreator = {
     };
   },
 
-  loadQuestions: (questions) => {
-    return {
-      type: ActionType.LOAD_QUESTIONS,
-      payload: questions,
-    };
-  },
-
   resetGame: () => {
     return {
       type: ActionType.RESET
     };
   }
-};
-
-
-const Operation = {
-  loadQuestions: () => (dispatch, _getState, api) => {
-    return api.get(`/questions`)
-      .then((response) => {
-        dispatch(ActionCreator.loadQuestions(response.data));
-      });
-  },
 };
 
 
@@ -80,11 +61,6 @@ const reducer = (state = initialState, action) => {
     case ActionType.INCREMENT_MISTAKES:
       return Object.assign({}, state, {
         mistakes: state.mistakes + action.payload,
-      });
-
-    case ActionType.LOAD_QUESTIONS:
-      return Object.assign({}, state, {
-        questions: action.payload,
       });
 
     case ActionType.RESET:
@@ -103,6 +79,5 @@ export {
   ActionType,
   isArtistAnswerCorrect,
   isGenreAnswerCorrect,
-  Operation,
   reducer,
 };

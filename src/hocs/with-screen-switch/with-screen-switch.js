@@ -12,7 +12,7 @@ import WinScreen from "../../components/win-screen/win-screen.jsx";
 import withActivePlayer from "../../hocs/with-active-player/with-active-player";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
 import withUserAnswer from "../../hocs/with-user-answer/with-user-answer";
-import {ActionCreator} from "../../reducer";
+import {ActionCreator} from "../../reducer/game/game";
 
 const TypeQuestion = {
   ARTIST: `artist`,
@@ -123,9 +123,9 @@ const withScreenSwitch = (Component) => {
 export {withScreenSwitch};
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  mistakes: state.mistakes,
-  questions: state.questions,
-  step: state.step,
+  questions: state.data.questions,
+  step: state.game.step,
+  mistakes: state.game.mistakes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
