@@ -1,11 +1,13 @@
+import {compose} from "recompose";
+import {createStore, applyMiddleware} from 'redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore} from 'redux';
 import {Provider} from 'react-redux';
+import thunk from "redux-thunk";
 
 import App from './components/app/app.jsx';
 import settings from './mocks/setting';
-import {reducer, ActionCreator} from './reducer';
+import {reducer, Operation} from './reducer';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
 
 
@@ -16,11 +18,14 @@ const init = (gameSettings) => {
   /* eslint-disable no-underscore-dangle */
   const store = createStore(
       reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      compose(
+          applyMiddleware(thunk),
+          window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      )
   );
   /* eslint-enable */
 
-  store.dispatch(ActionCreator.loadQuestions());
+  store.dispatch(Operation.loadQuestions());
 
   ReactDOM.render(
       <Provider store={store}>

@@ -295,12 +295,13 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: 1000000,
       mistakes: 12309,
+      questions: [`asdf`],
     }, {
       type: ActionType.RESET,
     })).toEqual({
       step: -1,
       mistakes: 0,
-      questions: [],
+      questions: [`asdf`],
     });
   });
 });
