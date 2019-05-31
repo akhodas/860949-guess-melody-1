@@ -3,8 +3,12 @@ import {
   ActionType,
   isArtistAnswerCorrect,
   isGenreAnswerCorrect,
+  Operation,
   reducer,
 } from './reducer';
+import {createAPI} from "./api";
+import MockAdapter from "axios-mock-adapter";
+
 
 describe(`Business logic is correct`, () => {
   it(`Artist answer is checked correctly`, () => {
@@ -303,5 +307,25 @@ describe(`Reducer works correctly`, () => {
       mistakes: 0,
       questions: [`asdf`],
     });
+  });
+
+  it(`Should make a correct API call to /questions`, function () {
+    const dispatch = jest.fn();
+    const api = createAPI(dispatch);
+    const apiMock = new MockAdapter(api);
+    const questionLoader = Operation.loadQuestions();
+
+    apiMock
+      .onGet(`/questions`)
+      .reply(200, [{fake: true}]);
+
+    return questionLoader(dispatch, jest.fn(), api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.LOAD_QUESTIONS,
+          payload: [{fake: true}],
+        });
+      });
   });
 });
