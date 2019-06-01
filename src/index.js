@@ -1,36 +1,41 @@
+import {compose} from "recompose";
+import {createStore, applyMiddleware} from 'redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore} from 'redux';
 import {Provider} from 'react-redux';
+import thunk from "redux-thunk";
 
 import App from './components/app/app.jsx';
+import {createAPI} from './api';
 import settings from './mocks/setting';
-import questions from './mocks/questions';
-import {reducer} from './reducer';
+import reducer from './reducer/index';
+import {Operation} from './reducer/data/data';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
 
 
 const AppWrapped = withScreenSwitch(App);
 
-const init = (gameSettings, gameQuestions) => {
+const init = (gameSettings) => {
+  const api = createAPI((...args) => store.dispatch(...args));
 
-  /* eslint-disable no-underscore-dangle */
-  const store = createStore(
-      reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const enhancer = composeEnhancers(
+      applyMiddleware(thunk.withExtraArgument(api))
   );
-  /* eslint-enable */
+  const store = createStore(reducer, enhancer);
+
+  store.dispatch(Operation.loadQuestions());
 
   ReactDOM.render(
       <Provider store={store}>
         <AppWrapped
           maxMistakes={gameSettings.errorCount}
           gameTime={gameSettings.gameTime}
-          questions={gameQuestions}
         />
       </Provider>,
       document.querySelector(`.main`)
   );
 };
 
-init(settings, questions);
+init(settings);

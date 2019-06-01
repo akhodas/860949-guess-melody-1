@@ -64,7 +64,10 @@ const reducer = (state = initialState, action) => {
       });
 
     case ActionType.RESET:
-      return Object.assign({}, initialState);
+      return Object.assign({}, state, {
+        step: -1,
+        mistakes: 0,
+      });
   }
 
   return state;
