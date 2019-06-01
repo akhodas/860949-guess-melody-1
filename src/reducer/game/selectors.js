@@ -1,12 +1,12 @@
-import NameSpace from "../name-spaces";
+import Namespace from "../namespaces";
 
-const NAME_SPACE = NameSpace.GAME;
+const NAMESPACE = Namespace.GAME;
 
 
 export const getStep = (state) => {
-  return state[NAME_SPACE].step;
+  return state[NAMESPACE].step;
 };
 
 export const getMistakes = (state) => {
-  return state[NAME_SPACE].mistakes;
+  return state[NAMESPACE].mistakes;
 };

@@ -1,11 +1,11 @@
 import {createSelector} from "reselect";
-import NameSpace from "../name-spaces";
+import Namespace from "../namespaces";
 
-const NAME_SPACE = NameSpace.DATA;
+const NAMESPACE = Namespace.DATA;
 
 
 export const getQuestions = (state) => {
-  return state[NAME_SPACE].questions;
+  return state[NAMESPACE].questions;
 };
 
 export const getGenreQuestions = createSelector(
