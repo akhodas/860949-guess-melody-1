@@ -18,15 +18,12 @@ const AppWrapped = withScreenSwitch(App);
 const init = (gameSettings) => {
   const api = createAPI((...args) => store.dispatch(...args));
 
-  /* eslint-disable no-underscore-dangle */
-  const store = createStore(
-      reducer,
-      compose(
-          applyMiddleware(thunk.withExtraArgument(api)),
-          window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-      )
+
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const enhancer = composeEnhancers(
+      applyMiddleware(thunk.withExtraArgument(api))
   );
-  /* eslint-enable */
+  const store = createStore(reducer, enhancer);
 
   store.dispatch(Operation.loadQuestions());
 
