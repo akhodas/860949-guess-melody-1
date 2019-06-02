@@ -18,6 +18,8 @@ import {ActionCreator} from "../../reducer/game/game";
 import {getStep, getMistakes} from "../../reducer/game/selectors";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {getQuestions} from "../../reducer/data/selectors";
+import {Operation as UserOperation} from "../../reducer/user/user.js";
+import withAuthorization from "../with-authorization/with-authorization.js";
 
 
 const TypeQuestion = {
@@ -33,6 +35,8 @@ const transformPlayerToAnswer = (props) => {
   return newProps;
 };
 
+
+const AuthorizationScreenWrapped = withAuthorization(AuthorizationScreen);
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 const QuestionGenreScreenWrapped = withUserAnswer(withActivePlayer(
     withTransformProps(transformPlayerToAnswer)(QuestionGenreScreen)));
@@ -55,7 +59,11 @@ const withScreenSwitch = (Component) => {
 
     _getScreen(question) {
       if (this.props.isAuthorizationRequired) {
-        return <AuthorizationScreen />;
+        const {logIn} = this.props;
+
+        return <AuthorizationScreenWrapped
+          logIn = {logIn}
+        />;
       }
 
       const {
@@ -125,6 +133,7 @@ const withScreenSwitch = (Component) => {
     resetGame: PropTypes.func.isRequired,
     questions: PropTypes.array.isRequired,
     step: PropTypes.number.isRequired,
+    logIn: PropTypes.func.isRequired,
   };
 
   return WithScreenSwitch;
@@ -152,6 +161,8 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   resetGame: () => dispatch(ActionCreator.resetGame()),
+
+  logIn: (data) => dispatch(UserOperation.logIn(data)),
 });
 
 export default compose(

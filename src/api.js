@@ -10,13 +10,19 @@ export const createAPI = (dispatch) => {
   });
 
   const onSuccess = (response) => response;
-  const onFail = (err) => {
-    if (err.response.status === 403) {
-      dispatch(ActionCreator.requireAuthorization(true));
 
-      return;
+  const onFail = (err) => {
+    switch (err.response.status) {
+      case 403:
+        dispatch(ActionCreator.requireAuthorization(true));
+        return;
+
+      case 400:
+        throw new Error(`Неправильно указаны данные!`);
+
+      default:
+        throw err;
     }
-    throw err;
   };
 
   api.interceptors.response.use(onSuccess, onFail);
