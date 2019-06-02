@@ -82,12 +82,16 @@ const withScreenSwitch = (Component) => {
           const {
             gameTime,
             onWelcomeScreenClick,
+            isAuthorization,
           } = this.props;
 
           return <WelcomeScreen
             errorCount={maxMistakes}
             gameTime={gameTime}
-            onClick={onWelcomeScreenClick}
+            onClick={(e) => {
+              onWelcomeScreenClick(e);
+              isAuthorization();
+            }}
           />;
         }
       }
@@ -134,6 +138,7 @@ const withScreenSwitch = (Component) => {
     questions: PropTypes.array.isRequired,
     step: PropTypes.number.isRequired,
     logIn: PropTypes.func.isRequired,
+    isAuthorization: PropTypes.func.isRequired,
   };
 
   return WithScreenSwitch;
@@ -163,6 +168,8 @@ const mapDispatchToProps = (dispatch) => ({
   resetGame: () => dispatch(ActionCreator.resetGame()),
 
   logIn: (data) => dispatch(UserOperation.logIn(data)),
+
+  isAuthorization: () => dispatch(UserOperation.addUserData()),
 });
 
 export default compose(

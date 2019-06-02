@@ -9,8 +9,7 @@ import App from './components/app/app.jsx';
 import {createAPI} from './api';
 import settings from './mocks/setting';
 import reducer from './reducer/index';
-import {Operation as Data} from './reducer/data/data';
-import {Operation as User} from './reducer/user/user';
+import {Operation as OperationData} from './reducer/data/data';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
 
 
@@ -26,8 +25,7 @@ const init = (gameSettings) => {
   );
   const store = createStore(reducer, enhancer);
 
-  store.dispatch(Data.loadQuestions());
-  store.dispatch(User.addUserData());
+  store.dispatch(OperationData.loadQuestions());
 
   ReactDOM.render(
       <Provider store={store}>
