@@ -41,7 +41,9 @@ exports[`AuthorizationScreen correctly rendered 1`] = `
         className="login__input"
         id="name"
         name="name"
+        onChange={[MockFunction]}
         type="text"
+        value="name"
       />
     </p>
     <p
@@ -57,7 +59,9 @@ exports[`AuthorizationScreen correctly rendered 1`] = `
         className="login__input"
         id="password"
         name="password"
+        onChange={[MockFunction]}
         type="text"
+        value="password"
       />
       <span
         className="login__error"
@@ -67,6 +71,7 @@ exports[`AuthorizationScreen correctly rendered 1`] = `
     </p>
     <button
       className="login__button button"
+      onClick={[MockFunction]}
       type="submit"
     >
       Войти

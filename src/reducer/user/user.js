@@ -37,7 +37,9 @@ const ActionCreator = {
 const Operation = {
   addUserData: () => (dispatch, _getState, api) => {
     return api.get(`/login`)
-        .then((response) => dispatch(ActionCreator.addUserData(response.data)))
+        .then((response) => {
+          return dispatch(ActionCreator.addUserData(response.data));
+        })
         .catch(() => {
           // eslint-disable-next-line no-console
           console.log(`Ошибка авторизации. Повторите позже!`);
