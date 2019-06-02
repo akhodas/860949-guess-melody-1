@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {compose} from "recompose";
 
 import ArtistQuestionScreen from "../../components/artist-question-screen/artist-question-screen.jsx";
+import AuthorizationScreen from "../../components/authorization-screen/authorization-screen.jsx";
 import GameOverScreen from "../../components/game-over-screen/game-over-screen.jsx";
 import QuestionGenreScreen from "../../components/genre-question-screen/genre-question-screen.jsx";
 import WelcomeScreen from "../../components/welcome-screen/welcome-screen.jsx";
@@ -15,6 +16,7 @@ import withUserAnswer from "../../hocs/with-user-answer/with-user-answer";
 import {ActionCreator} from "../../reducer/game/game";
 
 import {getStep, getMistakes} from "../../reducer/game/selectors";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {getQuestions} from "../../reducer/data/selectors";
 
 
@@ -52,6 +54,10 @@ const withScreenSwitch = (Component) => {
     }
 
     _getScreen(question) {
+      if (this.props.isAuthorizationRequired) {
+        return <AuthorizationScreen />;
+      }
+
       const {
         onUserAnswer,
         mistakes,
@@ -110,6 +116,7 @@ const withScreenSwitch = (Component) => {
 
   WithScreenSwitch.propTypes = {
     gameTime: PropTypes.number.isRequired,
+    isAuthorizationRequired: PropTypes.bool.isRequired,
     questionsLength: PropTypes.number,
     maxMistakes: PropTypes.number.isRequired,
     mistakes: PropTypes.number.isRequired,
@@ -130,6 +137,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   questions: getQuestions(state),
   step: getStep(state),
   mistakes: getMistakes(state),
+  isAuthorizationRequired: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
