@@ -1,8 +1,8 @@
-import NameSpace from "../namespaces";
+import Namespace from "../namespaces";
 
-const NAME_SPACE = NameSpace.USER;
+const NAMESPACE = Namespace.USER;
 
 
 export const getAuthorizationStatus = (state) => {
-  return state[NAME_SPACE].isAuthorizationRequired;
+  return state[NAMESPACE].isAuthorizationRequired;
 };
