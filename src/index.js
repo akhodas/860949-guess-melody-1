@@ -2,7 +2,6 @@ import {compose} from "recompose";
 import {createStore, applyMiddleware} from 'redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import thunk from "redux-thunk";
 
@@ -17,7 +16,7 @@ import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
 const AppWrapped = withScreenSwitch(App);
 
 const init = (gameSettings) => {
-  const api = createAPI((...args) => store.dispatch(...args));
+  const api = createAPI(() => history.pushState(null, null, `/login`));
 
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -30,12 +29,10 @@ const init = (gameSettings) => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <BrowserRouter>
-          <AppWrapped
-            maxMistakes={gameSettings.errorCount}
-            gameTime={gameSettings.gameTime}
-          />
-        </BrowserRouter>
+        <AppWrapped
+          maxMistakes={gameSettings.errorCount}
+          gameTime={gameSettings.gameTime}
+        />
       </Provider>,
       document.querySelector(`.main`)
   );

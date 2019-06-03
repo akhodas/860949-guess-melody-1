@@ -52,63 +52,48 @@ const withScreenSwitch = (Component) => {
     }
 
     render() {
-      return <Switch>
-        <Route path="/" exact render={() => <Component
-          {...this.props}
-          renderScreen={this._getScreen}
-        />} />
-        <Route path="/login" component={AuthorizationScreen} />
-      </Switch>;
-      // return <Component
-      //   {...this.props}
-      //   renderScreen={this._getScreen}
-      // />;
+      return <BrowserRouter>
+        <Switch>
+          <Route path="/" exact render={() => <Component
+            {...this.props}
+            renderScreen={this._getScreen}
+          />} />
+          <Route path="/win" component={WinScreen} />
+          <Route path="/lose" component={GameOverScreen} />
+          <Route path="/login" component={AuthorizationScreenWrapped} />
+          {/* <AuthorizationScreenWrapped logIn = {logIn} />; */}
+        </Switch>
+      </BrowserRouter>;
     }
 
     _getScreen(question) {
-      if (this.props.isAuthorizationRequired) {
-        const {logIn} = this.props;
-
-        return <AuthorizationScreenWrapped
-          logIn = {logIn}
-        />;
-      }
-
       const {
+        gameTime,
         onUserAnswer,
         mistakes,
         maxMistakes,
-        resetGame,
+        onWelcomeScreenClick,
+        questions,
+        step,
       } = this.props;
 
-      if (!question) {
-        const {step, questions} = this.props;
-        if (step > questions.length - 1) {
-          return <WinScreen
-            onRelaunchButtonClick={resetGame}/>;
-        } else {
-          const {
-            gameTime,
-            onWelcomeScreenClick,
-            isAuthorization,
-          } = this.props;
-
-          return <WelcomeScreen
-            errorCount={maxMistakes}
-            gameTime={gameTime}
-            onClick={(e) => {
-              onWelcomeScreenClick(e);
-              isAuthorization();
-            }}
-          />;
-        }
+      if (step > questions.length) {
+        return <Redirect to="/win" />;
       }
+
 
       if (mistakes >= maxMistakes) {
-        return <GameOverScreen
-          onRelaunchButtonClick={resetGame}
+        return <Redirect to="/lose" />;
+      }
+
+      if (step === -1) {
+        return <WelcomeScreen
+          errorCount={maxMistakes}
+          gameTime={gameTime}
+          onClick={onWelcomeScreenClick}
         />;
       }
+
 
       switch (question.type) {
         case TypeQuestion.GENRE: return <QuestionGenreScreenWrapped
@@ -131,6 +116,73 @@ const withScreenSwitch = (Component) => {
 
       return null;
     }
+
+    // _getScreen(question) {
+    //   if (this.props.isAuthorizationRequired) {
+    //     const {logIn} = this.props;
+
+    //     return <AuthorizationScreenWrapped
+    //       logIn = {logIn}
+    //     />;
+    //   }
+
+    //   const {
+    //     onUserAnswer,
+    //     mistakes,
+    //     maxMistakes,
+    //     resetGame,
+    //   } = this.props;
+
+    //   if (!question) {
+    //     const {step, questions} = this.props;
+    //     if (step > questions.length - 1) {
+    //       return <WinScreen
+    //         onRelaunchButtonClick={resetGame}/>;
+    //     } else {
+    //       const {
+    //         gameTime,
+    //         onWelcomeScreenClick,
+    //         isAuthorization,
+    //       } = this.props;
+
+    //       return <WelcomeScreen
+    //         errorCount={maxMistakes}
+    //         gameTime={gameTime}
+    //         onClick={(e) => {
+    //           onWelcomeScreenClick(e);
+    //           isAuthorization();
+    //         }}
+    //       />;
+    //     }
+    //   }
+
+    //   if (mistakes >= maxMistakes) {
+    //     return <GameOverScreen
+    //       onRelaunchButtonClick={resetGame}
+    //     />;
+    //   }
+
+    //   switch (question.type) {
+    //     case TypeQuestion.GENRE: return <QuestionGenreScreenWrapped
+    //       answers={question.answers}
+    //       question={question}
+    //       onAnswer={(userAnswer) => onUserAnswer(
+    //           userAnswer,
+    //           question
+    //       )}
+    //     />;
+
+    //     case TypeQuestion.ARTIST: return <ArtistQuestionScreenWrapped
+    //       question={question}
+    //       onAnswer={(userAnswer) => onUserAnswer(
+    //           userAnswer,
+    //           question
+    //       )}
+    //     />;
+    //   }
+
+    //   return null;
+    // }
 
   }
 
