@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {compose} from "recompose";
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 
 import ArtistQuestionScreen from "../../components/artist-question-screen/artist-question-screen.jsx";
 import AuthorizationScreen from "../../components/authorization-screen/authorization-screen.jsx";
@@ -51,10 +52,17 @@ const withScreenSwitch = (Component) => {
     }
 
     render() {
-      return <Component
-        {...this.props}
-        renderScreen={this._getScreen}
-      />;
+      return <Switch>
+        <Route path="/" exact render={() => <Component
+          {...this.props}
+          renderScreen={this._getScreen}
+        />} />
+        <Route path="/login" component={AuthorizationScreen} />
+      </Switch>;
+      // return <Component
+      //   {...this.props}
+      //   renderScreen={this._getScreen}
+      // />;
     }
 
     _getScreen(question) {

@@ -2,6 +2,7 @@ import {compose} from "recompose";
 import {createStore, applyMiddleware} from 'redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import thunk from "redux-thunk";
 
@@ -29,10 +30,12 @@ const init = (gameSettings) => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <AppWrapped
-          maxMistakes={gameSettings.errorCount}
-          gameTime={gameSettings.gameTime}
-        />
+        <BrowserRouter>
+          <AppWrapped
+            maxMistakes={gameSettings.errorCount}
+            gameTime={gameSettings.gameTime}
+          />
+        </BrowserRouter>
       </Provider>,
       document.querySelector(`.main`)
   );
