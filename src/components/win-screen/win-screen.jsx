@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
 
 const WinScreen = (props) => {
-  const {onRelaunchButtonClick} = props;
+  const {onReplayButtonClick} = props;
 
   return <section className="result">
     <div className="result__logo">
@@ -11,16 +12,16 @@ const WinScreen = (props) => {
     <h2 className="result__title">Вы настоящий меломан!</h2>
     <p className="result__total">За 3 минуты и 25 секунд вы набрали 12 баллов (8 быстрых), совершив 3 ошибки</p>
     <p className="result__text">Вы заняли 2 место из 10. Это лучше чем у 80% игроков</p>
-    <button
+    <Link
       className="replay"
-      type="button"
-      onClick={onRelaunchButtonClick}
-    >Сыграть ещё раз</button>
+      to="/"
+      onClick={onReplayButtonClick}
+    >Сыграть ещё раз</Link>
   </section>;
 };
 
 WinScreen.propTypes = {
-  onRelaunchButtonClick: PropTypes.func.isRequired,
+  onReplayButtonClick: PropTypes.func.isRequired,
 };
 
 export default WinScreen;

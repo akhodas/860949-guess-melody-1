@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
 const WelcomeScreen = (props) => {
   const {gameTime, errorCount, onClick} = props;
 

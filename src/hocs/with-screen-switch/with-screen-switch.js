@@ -58,10 +58,20 @@ const withScreenSwitch = (Component) => {
             {...this.props}
             renderScreen={this._getScreen}
           />} />
-          <Route path="/win" component={WinScreen} />
-          <Route path="/lose" component={GameOverScreen} />
-          <Route path="/login" component={AuthorizationScreenWrapped} />
-          {/* <AuthorizationScreenWrapped logIn = {logIn} />; */}
+
+          <Route path="/results" render={() => <WinScreen
+            onReplayButtonClick={this.props.resetGame}
+          />} />
+
+          <Route path="/lose" render={() => <GameOverScreen
+            onRelaunchButtonClick={this.props.resetGame}
+          />} />
+          <Route path="/login" render={() => <AuthorizationScreenWrapped
+            logIn = {(e) => {
+              this.props.resetGame();
+              this.props.logIn(e);
+            }}
+          />} />
         </Switch>
       </BrowserRouter>;
     }
@@ -73,17 +83,21 @@ const withScreenSwitch = (Component) => {
         mistakes,
         maxMistakes,
         onWelcomeScreenClick,
+        isAuthorizationRequired,
         questions,
         step,
       } = this.props;
 
-      if (step > questions.length) {
-        return <Redirect to="/win" />;
+      if (step >= questions.length) {
+        return <Redirect to="/results" />;
       }
-
 
       if (mistakes >= maxMistakes) {
         return <Redirect to="/lose" />;
+      }
+
+      if (step === 0 && isAuthorizationRequired) {
+        return <Redirect to="/login" />;
       }
 
       if (step === -1) {
@@ -116,74 +130,6 @@ const withScreenSwitch = (Component) => {
 
       return null;
     }
-
-    // _getScreen(question) {
-    //   if (this.props.isAuthorizationRequired) {
-    //     const {logIn} = this.props;
-
-    //     return <AuthorizationScreenWrapped
-    //       logIn = {logIn}
-    //     />;
-    //   }
-
-    //   const {
-    //     onUserAnswer,
-    //     mistakes,
-    //     maxMistakes,
-    //     resetGame,
-    //   } = this.props;
-
-    //   if (!question) {
-    //     const {step, questions} = this.props;
-    //     if (step > questions.length - 1) {
-    //       return <WinScreen
-    //         onRelaunchButtonClick={resetGame}/>;
-    //     } else {
-    //       const {
-    //         gameTime,
-    //         onWelcomeScreenClick,
-    //         isAuthorization,
-    //       } = this.props;
-
-    //       return <WelcomeScreen
-    //         errorCount={maxMistakes}
-    //         gameTime={gameTime}
-    //         onClick={(e) => {
-    //           onWelcomeScreenClick(e);
-    //           isAuthorization();
-    //         }}
-    //       />;
-    //     }
-    //   }
-
-    //   if (mistakes >= maxMistakes) {
-    //     return <GameOverScreen
-    //       onRelaunchButtonClick={resetGame}
-    //     />;
-    //   }
-
-    //   switch (question.type) {
-    //     case TypeQuestion.GENRE: return <QuestionGenreScreenWrapped
-    //       answers={question.answers}
-    //       question={question}
-    //       onAnswer={(userAnswer) => onUserAnswer(
-    //           userAnswer,
-    //           question
-    //       )}
-    //     />;
-
-    //     case TypeQuestion.ARTIST: return <ArtistQuestionScreenWrapped
-    //       question={question}
-    //       onAnswer={(userAnswer) => onUserAnswer(
-    //           userAnswer,
-    //           question
-    //       )}
-    //     />;
-    //   }
-
-    //   return null;
-    // }
-
   }
 
   WithScreenSwitch.propTypes = {
@@ -198,7 +144,6 @@ const withScreenSwitch = (Component) => {
     questions: PropTypes.array.isRequired,
     step: PropTypes.number.isRequired,
     logIn: PropTypes.func.isRequired,
-    isAuthorization: PropTypes.func.isRequired,
   };
 
   return WithScreenSwitch;
@@ -225,11 +170,13 @@ const mapDispatchToProps = (dispatch) => ({
     ));
   },
 
-  resetGame: () => dispatch(ActionCreator.resetGame()),
+  resetGame: () => {
+    dispatch(ActionCreator.resetGame());
+  },
 
-  logIn: (data) => dispatch(UserOperation.logIn(data)),
-
-  isAuthorization: () => dispatch(UserOperation.addUserData()),
+  logIn: (data) => {
+    dispatch(UserOperation.logIn(data));
+  },
 });
 
 export default compose(

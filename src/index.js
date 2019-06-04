@@ -11,12 +11,13 @@ import settings from './mocks/setting';
 import reducer from './reducer/index';
 import {Operation as OperationData} from './reducer/data/data';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
+import {Operation as OperationUser} from "./reducer/user/user.js";
 
 
 const AppWrapped = withScreenSwitch(App);
 
 const init = (gameSettings) => {
-  const api = createAPI(() => history.pushState(null, null, `/login`));
+  const api = createAPI((...args) => store.dispatch(...args));
 
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -26,6 +27,7 @@ const init = (gameSettings) => {
   const store = createStore(reducer, enhancer);
 
   store.dispatch(OperationData.loadQuestions());
+  store.dispatch(OperationUser.addUserData());
 
   ReactDOM.render(
       <Provider store={store}>

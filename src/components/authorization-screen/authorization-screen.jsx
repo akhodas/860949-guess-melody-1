@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
 
 
 const AuthorizationScreen = (props) => {
@@ -38,9 +39,10 @@ const AuthorizationScreen = (props) => {
         </p>
         <button
           className="login__button button"
-          type="submit"
-          onClick = {logIn}
-        >Войти</button>
+          onClick={logIn}
+        >
+          <Link to="/">Войти</Link>
+        </button>
       </form>
     </section>
   );
