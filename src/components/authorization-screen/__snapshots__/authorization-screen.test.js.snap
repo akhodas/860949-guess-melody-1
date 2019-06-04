@@ -72,9 +72,13 @@ exports[`AuthorizationScreen correctly rendered 1`] = `
     <button
       className="login__button button"
       onClick={[MockFunction]}
-      type="submit"
     >
-      Войти
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Войти
+      </a>
     </button>
   </form>
 </section>
